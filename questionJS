@@ -125,6 +125,36 @@ Qualtrics.SurveyEngine.addOnload(function()
                 if (this.nextCard) this.nextCard.style.transform =
                     'translateX(-50%) translateY(-50%) rotate(0deg) rotateY(0deg) scale(' + scale + ')'
 
+		 if (propX < -0.25) {
+		        // Swiping left - red
+		        this.topCard.style.border = '2px solid red';
+		        this.topCard.style.boxShadow = `
+		            inset 0 0 10px 5px rgba(255, 0, 0, 0.3), 
+		            inset 0 0 20px 10px rgba(255, 0, 0, 0.2), 
+		            inset 0 0 30px 15px rgba(255, 0, 0, 0.1)
+		        `;
+		    } else if (propX > 0.25) {
+		        // Swiping right - green
+		        this.topCard.style.border = '2px solid green';
+		        this.topCard.style.boxShadow = `
+		            inset 0 0 10px 5px rgba(0, 255, 0, 0.3), 
+		            inset 0 0 20px 10px rgba(0, 255, 0, 0.2), 
+		            inset 0 0 30px 15px rgba(0, 255, 0, 0.1)
+		        `;
+		    } else if (propY < -0.25) {
+		        // Swiping up - blue
+		        this.topCard.style.border = '2px solid blue';
+		        this.topCard.style.boxShadow = `
+		            inset 0 0 10px 5px rgba(0, 0, 255, 0.3), 
+		            inset 0 0 20px 10px rgba(0, 0, 255, 0.2), 
+		            inset 0 0 30px 15px rgba(0, 0, 255, 0.1)
+		        `;
+		    } else {
+		        // Reset styles when near the center
+		        this.topCard.style.border = 'none';
+		        this.topCard.style.boxShadow = 'none';
+		    }
+
                 if (e.isFinal) {
 
                     this.isPanning = false
@@ -187,11 +217,10 @@ this.board.removeChild(this.topCard)
 
                     } else {
 
-                        // reset cards position and size
-                        this.topCard.style.transform =
-                            'translateX(-50%) translateY(-50%) rotate(0deg) rotateY(0deg) scale(1)'
-                        if (this.nextCard) this.nextCard.style.transform =
-                            'translateX(-50%) translateY(-50%) rotate(0deg) rotateY(0deg) scale(0.95)'
+			            this.topCard.style.transform =
+			                'translateX(-50%) translateY(-50%) rotate(0deg)';
+			            this.topCard.style.border = 'none';
+			            this.topCard.style.boxShadow = 'none';
 
                     }
 
