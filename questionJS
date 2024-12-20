@@ -127,7 +127,6 @@ Qualtrics.SurveyEngine.addOnload(function()
 
 		 if (propX < -0.25) {
 		        // Swiping left - red
-		        this.topCard.style.border = '2px solid red';
 		        this.topCard.style.boxShadow = `
 		            inset 0 0 10px 5px rgba(255, 0, 0, 0.3), 
 		            inset 0 0 20px 10px rgba(255, 0, 0, 0.2), 
@@ -135,7 +134,6 @@ Qualtrics.SurveyEngine.addOnload(function()
 		        `;
 		    } else if (propX > 0.25) {
 		        // Swiping right - green
-		        this.topCard.style.border = '2px solid green';
 		        this.topCard.style.boxShadow = `
 		            inset 0 0 10px 5px rgba(0, 255, 0, 0.3), 
 		            inset 0 0 20px 10px rgba(0, 255, 0, 0.2), 
@@ -143,7 +141,6 @@ Qualtrics.SurveyEngine.addOnload(function()
 		        `;
 		    } else if (propY < -0.25) {
 		        // Swiping up - blue
-		        this.topCard.style.border = '2px solid blue';
 		        this.topCard.style.boxShadow = `
 		            inset 0 0 10px 5px rgba(0, 0, 255, 0.3), 
 		            inset 0 0 20px 10px rgba(0, 0, 255, 0.2), 
@@ -151,7 +148,6 @@ Qualtrics.SurveyEngine.addOnload(function()
 		        `;
 		    } else {
 		        // Reset styles when near the center
-		        this.topCard.style.border = 'none';
 		        this.topCard.style.boxShadow = 'none';
 		    }
 
