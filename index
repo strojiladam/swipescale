@@ -45,7 +45,7 @@ body {
   border-radius: 1%;
   background-color: white;
   justify-content: center; /* Horizontally center content inside the card */
-  align-items: top; /* Vertically center content inside the card */
+  align-items: center; /* Vertically center content inside the card */
   color: #000;
   display: flex;
   transition: box-shadow 0.1s ease; /* Smooth transitions for swiping effects */
@@ -58,11 +58,11 @@ body {
             font-size: 22px;
             font-weight: bold;
             color: #333;
-            padding-top: 60%;
+            padding-top: 5%;
   			padding-left: 5%;
   			padding-right: 5%;
+            padding-bottom: 5%;
             text-align: center; /* Center-align text */
-
         }
         
 .stamp {
@@ -71,7 +71,7 @@ body {
     padding: 1% 2%; /* Responsive padding */
     border: 2px solid;
     border-radius: 4px;
-    font-size: 5vw; /* Scaled font size for responsiveness */
+    font-size: clamp(1.5rem, 5vw, 2.5rem); /* Scaled font size for responsiveness */
     font-weight: bold;
     text-transform: uppercase; /* Make the text uppercase */
     transition: opacity 0.1s ease;
@@ -233,7 +233,7 @@ body {
                 // get swipe direction, left (-1) or right (1)
                 let dirX = e.deltaX < 0 ? -1 : 1
 
-                // get degrees of rotation, between 0 and +/- 45
+                // get degrees of rotation, between 0 and +/- X
                 let deg = this.isDraggingFrom * dirX * Math.abs(propX) * 15
 
                 // get scale ratio, between .95 and 1
