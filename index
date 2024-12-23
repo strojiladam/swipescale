@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <style>
        
-       body {
+body {
   overflow: hidden;
   font-family: sans-serif;
 }
@@ -16,18 +16,23 @@
   margin: 0;
 }
 
-
-body {
-  overflow: hidden;
-  font-family: sans-serif;
-}
-
 #board {
   width: 100%;
   height: 100vh; /* Ensure full viewport height */
   position: relative;
   overflow: hidden;
   background-color: rgb(66,66,66);
+}
+
+@keyframes slideInFromBottom {
+  from {
+    transform: translate(-50%, 150%) scale(0.9); /* Start below the viewport */
+    opacity: 0; /* Optional: Fade in effect */
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1); /* End at the original position */
+    opacity: 1; /* Fully visible */
+  }
 }
 
 .card {
@@ -49,10 +54,13 @@ body {
   padding-top: 20%;
   padding-left: 5%;
   padding-right: 5%;
-  transition: border 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions for swiping effects */
+  transition: box-shadow 0.1s ease; /* Smooth transitions for swiping effects */
   border: none; /* Default no border */
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1); /* Default shadow */
+
+  animation: slideInFromBottom 0.3s ease-out;
 }
+
     </style>
 </head>
 
