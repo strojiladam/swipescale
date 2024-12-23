@@ -4,38 +4,55 @@
 <head>
     <meta charset="utf-8">
     <style>
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
+       
+       body {
+  overflow: hidden;
+  font-family: sans-serif;
+}
 
-        #board {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            overflow: hidden;
-            background-color: rgb(245, 247, 250);
-        }
+*, *:before, *:after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
 
-        .card {
-            width: 320px;
-            height: 320px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            border-radius: 1%;
-            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
-            background-color: white;
-            transform: translateX(-50%) translateY(-50%) scale(0.95);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            text-align: center;
-        }
+
+body {
+  overflow: hidden;
+  font-family: sans-serif;
+}
+
+#board {
+  width: 100%;
+  height: 100vh; /* Ensure full viewport height */
+  position: relative;
+  overflow: hidden;
+  background-color: rgb(66,66,66);
+}
+
+.card {
+  width: 90%;
+  height: 80%;
+  position: absolute;
+  top: 43%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centers the card both horizontally and vertically */
+  border-radius: 1%;
+  background-color: white;
+  justify-content: center; /* Horizontally center content inside the card */
+  align-items: top; /* Vertically center content inside the card */
+  text-align: center; /* Center-align text */
+  font-size: 22px; /* Text size */
+  font-weight: bold; /* Bold text */
+  color: #000;
+  display: flex;
+  padding-top: 20%;
+  padding-left: 5%;
+  padding-right: 5%;
+  transition: border 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions for swiping effects */
+  border: none; /* Default no border */
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1); /* Default shadow */
+}
     </style>
 </head>
 
@@ -53,7 +70,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
     <script>
 
-        class Carousel {
+       class Carousel {
 
             constructor(element) {
 
@@ -164,7 +181,7 @@
                 let dirX = e.deltaX < 0 ? -1 : 1
 
                 // get degrees of rotation, between 0 and +/- 45
-                let deg = this.isDraggingFrom * dirX * Math.abs(propX) * 45
+                let deg = this.isDraggingFrom * dirX * Math.abs(propX) * 15
 
                 // get scale ratio, between .95 and 1
                 let scale = (95 + (5 * Math.abs(propX))) / 100
@@ -177,11 +194,39 @@
                 if (this.nextCard) this.nextCard.style.transform =
                     'translateX(-50%) translateY(-50%) rotate(0deg) rotateY(0deg) scale(' + scale + ')'
 
+        if (propX < -0.10) {
+        // Swiping left - #FF0000 (red)
+        this.topCard.style.boxShadow = `
+            inset 0 0 20px 10px rgba(255, 0, 0, 0.4), 
+            inset 0 0 30px 15px rgba(255, 0, 0, 0.3), 
+            inset 0 0 40px 20px rgba(255, 0, 0, 0.2)
+        `;
+    } else if (propX > 0.10) {
+        // Swiping right - #008000 (Green)
+        this.topCard.style.boxShadow = `
+            inset 0 0 20px 10px rgba(0, 128, 0, 0.4), 
+            inset 0 0 30px 15px rgba(0, 128, 0, 0.3), 
+            inset 0 0 40px 20px rgba(0, 128, 0, 0.2)
+        `;
+    } else if (propY < -0.25) {
+        // Swiping up - #4A90E2 (Blue)
+        this.topCard.style.boxShadow = `
+            inset 0 0 20px 10px rgba(74, 144, 226, 0.4), 
+            inset 0 0 30px 15px rgba(74, 144, 226, 0.3), 
+            inset 0 0 40px 20px rgba(74, 144, 226, 0.2)
+        `;
+		    } else {
+		        // Reset styles when near the center
+		        this.topCard.style.boxShadow = 'none';
+		    }
+
                 if (e.isFinal) {
 
                     this.isPanning = false
 
                     let successful = false
+                    
+                    let swipedir = null
 
                     // set back transition properties
                     this.topCard.style.transition = 'transform 200ms ease-out'
@@ -191,18 +236,24 @@
                     if (propX > 0.25 && e.direction == Hammer.DIRECTION_RIGHT) {
 
                         successful = true
+                        
+                        swipedir = 2
                         // get right border position
                         posX = this.board.clientWidth
 
                     } else if (propX < -0.25 && e.direction == Hammer.DIRECTION_LEFT) {
 
                         successful = true
+                        
+                        swipedir = 1
                         // get left border position
                         posX = -(this.board.clientWidth + this.topCard.clientWidth)
 
                     } else if (propY < -0.25 && e.direction == Hammer.DIRECTION_UP) {
 
                         successful = true
+                        
+                        swipedir = 0
                         // get top border position
                         posY = -(this.board.clientHeight + this.topCard.clientHeight)
 
@@ -214,21 +265,26 @@
                         this.topCard.style.transform =
                             'translateX(' + posX + 'px) translateY(' + posY + 'px) rotate(' + deg + 'deg)'
 
+Qualtrics.SurveyEngine.setEmbeddedData("swipedir1", swipedir)
                         // wait transition end
                         setTimeout(() => {
                             // remove swiped card
-                            this.board.removeChild(this.topCard)
-                            // handle gestures on new top card
+                            
+this.board.removeChild(this.topCard)
+                            
+                          // handle gestures on new top card
                             this.handle()
+							jQuery("#NextButton").click();
+
+
+
                         }, 200)
 
                     } else {
 
-                        // reset cards position and size
-                        this.topCard.style.transform =
-                            'translateX(-50%) translateY(-50%) rotate(0deg) rotateY(0deg) scale(1)'
-                        if (this.nextCard) this.nextCard.style.transform =
-                            'translateX(-50%) translateY(-50%) rotate(0deg) rotateY(0deg) scale(0.95)'
+			            this.topCard.style.transform =
+			                'translateX(-50%) translateY(-50%) rotate(0deg)';
+			            this.topCard.style.boxShadow = 'none';
 
                     }
 
