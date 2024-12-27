@@ -3,100 +3,149 @@
 
 <head>
     <meta charset="utf-8">
-    <style>
-       
-body {
-  overflow: hidden;
-  font-family: sans-serif;
-}
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <style>
+        body {
+            overflow: hidden;
+            font-family: sans-serif;
+        }
 
-*, *:before, *:after {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
+        *, *:before, *:after {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
 
-#board {
-  width: 100%;
-  height: 100vh; /* Ensure full viewport height */
-  position: relative;
-  overflow: hidden;
-  background-color: rgb(66,66,66);
-}
+        #board {
+            width: 100%;
+            height: 100dvh;
+            position: relative;
+            overflow: hidden;
+            background-color: rgb(66, 66, 66);
+        }
 
-@keyframes slideInFromBottom {
-  from {
-    transform: translate(-50%, 150%) scale(0.9); /* Start below the viewport */
-    opacity: 0; /* Optional: Fade in effect */
-  }
-  to {
-    transform: translate(-50%, -50%) scale(1); /* End at the original position */
-    opacity: 1; /* Fully visible */
-  }
-}
+        @keyframes slideInFromBottom {
+            from {
+                transform: translate(-50%, 150%) scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
 
-.card {
-  width: 90%;
-  height: 80%;
-  position: absolute;
-  top: 43%;
-  left: 50%;
-  transform: translate(-50%, -50%); /* Centers the card both horizontally and vertically */
-  border-radius: 1%;
-  background-color: white;
-  justify-content: center; /* Horizontally center content inside the card */
-  align-items: center; /* Vertically center content inside the card */
-  color: #000;
-  display: flex;
-  transition: box-shadow 0.1s ease; /* Smooth transitions for swiping effects */
-  border: none; /* Default no border */
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1); /* Default shadow */
-  animation: slideInFromBottom 0.3s ease-out;
-}
+        .card {
+            width: 90%;
+            height: 80%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 1%;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Space out content */
+            align-items: center;
+            color: #000;
+            transition: box-shadow 0.1s ease;
+            border: none;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+            animation: slideInFromBottom 0.3s ease-out;
+        }
 
         .text-container {
             font-size: 22px;
             font-weight: bold;
             color: #333;
-            padding-top: 5%;
-  			padding-left: 5%;
-  			padding-right: 5%;
-            padding-bottom: 5%;
-            text-align: center; /* Center-align text */
+            padding: 20px;
+            text-align: center;
+            flex-grow: 1; /* Allow text to expand */
+            display: flex;
+            justify-content: center; /* Center text horizontally */
+            align-items: center; /* Center text vertically */
+        }
+
+        .stamp {
+            position: absolute;
+            top: 15%;
+            padding: 1% 2%;
+            border: 2px solid;
+            border-radius: 4px;
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: opacity 0.1s ease;
+        }
+
+        .stamp.agree {
+            left: 15%;
+            color: green;
+            border-color: green;
+            transform: rotate(-10deg);
+            transform-origin: top left;
+            opacity: 0%;
+        }
+
+        .stamp.disagree {
+            right: 15%;
+            color: red;
+            border-color: red;
+            transform: rotate(10deg);
+            transform-origin: top right;
+            opacity: 0%;
+        }
+
+        .footer {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            opacity: 60%;
+        }
+
+        .footer .group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .footer .center {
+            margin: 0 auto;
+        }
+
+        .material-icons, .material-icons-outlined {
+            font-size: 45px;
+        }
+
+        /* Specific styles for thumb icons */
+        .footer .group .material-icons.thumb-down {
+            color: #F00000; /* Thumb down color */
+        }
+
+        .footer .group .material-icons.thumb-up {
+            color: #15B300; /* Thumb up color */
         }
         
-.stamp {
-    position: absolute;
-    top: 15%; /* Distance from the top edge */
-    padding: 1% 2%; /* Responsive padding */
-    border: 2px solid;
-    border-radius: 4px;
-    font-size: clamp(1.5rem, 5vw, 2.5rem); /* Scaled font size for responsiveness */
-    font-weight: bold;
-    text-transform: uppercase; /* Make the text uppercase */
-    transition: opacity 0.1s ease;
+        .center {
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    top: -20px; /* Move the whole center content up */
 }
 
-.stamp.agree {
-    left: 15%; /* Position on the left */
-    color: green;
-    border-color: green;
-    transform: rotate(-10deg); /* Rotate counterclockwise */
-    transform-origin: top left; /* Default transform origin */
-    opacity:0%
-
+.arrow-up {
+    margin-bottom: -10px; /* Keep the arrow slightly up */
+    color: #666;
 }
 
-.stamp.disagree {
-    right: 15%; /* Position on the right */
-    color: red;
-    border-color: red;
-    transform: rotate(10deg); /* Rotate clockwise */
-    transform-origin: top right; /* Adjust pivot for right positioning */
-    opacity:0%
+.skip-text {
+    font-size: 16px;
+    color: #333;
+    margin-top: 5px; /* Space between the arrow and text */
+    font-style: italic;
 }
-
-
 
 
     </style>
@@ -109,6 +158,21 @@ body {
         <div class="stamp disagree">Disagree</div>
         <div class="text-container">
             On the whole, I am satisfied with myself
+        </div>
+        <div class="footer">
+    <div class="group">
+        <span class="material-icons">navigate_before</span>
+        <span class="material-icons thumb-down">thumb_down</span>
+    </div>
+    <div class="center">
+        <span class="material-icons arrow-up">keyboard_double_arrow_up</span>
+        <div class="skip-text">SKIP</div>
+    </div>
+    <div class="group">
+        <span class="material-icons thumb-up">thumb_up</span>
+        <span class="material-icons">navigate_next</span>
+    </div>
+</div>
         </div>
     </div>
 </div>
