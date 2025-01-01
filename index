@@ -96,6 +96,24 @@
             transform-origin: top right;
             opacity: 0%;
         }
+        
+        .skip {
+            position: absolute;
+            bottom: 30%;
+            left: 50%;
+            transform: translateX(-50%) rotate(0deg);
+            color: #444; 
+            border-color: #444;
+            padding: 1% 2%;
+            border: 2px solid;
+            border-radius: 4px;
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-weight: bold;
+            text-transform: uppercase;
+            opacity: 0%; /* Default hidden */
+            transition: opacity 0.1s ease;
+}
+
 
         .footer {
             width: 100%;
@@ -147,6 +165,24 @@
     font-style: italic;
 }
 
+@media (max-width: 400px) {
+    .footer {
+        padding: 5px 10px; /* Reduce padding */
+    }
+
+    .footer .material-icons, .footer .material-icons-outlined {
+        font-size: 30px; /* Reduce icon size */
+    }
+
+    .footer .group {
+        gap: 5px; /* Reduce gap between elements */
+    }
+
+    .footer .center {
+        top: -10px; /* Adjust positioning for smaller screens */
+    }
+}
+
 
     </style>
 </head>
@@ -156,6 +192,7 @@
     <div class="card">
         <div class="stamp agree">Agree</div>
         <div class="stamp disagree">Disagree</div>
+        <div class="skip">Skip</div>
         <div class="text-container">
             On the whole, I am satisfied with myself
         </div>
@@ -321,6 +358,8 @@
             inset 0 0 40px 20px rgba(255, 0, 0, 0.2)
         `;
         disagreeStamp.style.opacity = '1';
+        agreeStamp.style.opacity = '0';
+        skipStamp.style.opacity = '0';
         
     } else if (propX > 0.10) {
         // Swiping right - #008000 (Green)
@@ -329,21 +368,27 @@
             inset 0 0 30px 15px rgba(0, 128, 0, 0.3), 
             inset 0 0 40px 20px rgba(0, 128, 0, 0.2)
         `;
+        disagreeStamp.style.opacity = '0';
         agreeStamp.style.opacity = '1';
+        skipStamp.style.opacity = '0';
         
     } else if (propY < -0.25) {
         // Swiping up - #4A90E2 (Blue)
-        this.topCard.style.boxShadow = `
-            inset 0 0 20px 10px rgba(74, 144, 226, 0.4), 
-            inset 0 0 30px 15px rgba(74, 144, 226, 0.3), 
-            inset 0 0 40px 20px rgba(74, 144, 226, 0.2)
+		this.topCard.style.boxShadow = `
+            inset 0 0 20px 10px rgba(0, 0, 0, 0.4), 
+            inset 0 0 30px 15px rgba(0, 0, 0, 0.3), 
+            inset 0 0 40px 20px rgba(0, 0, 0, 0.2)
         `;
+        disagreeStamp.style.opacity = '0';
+        agreeStamp.style.opacity = '0';
+        skipStamp.style.opacity = '1';
 		    } else {
 		        // Reset styles when near the center
 		        this.topCard.style.boxShadow = 'none';
                 agreeStamp.style.opacity = '0';
                 disagreeStamp.style.opacity = '0';
-                
+                skipStamp.style.opacity = '0';
+
 		    }
 
                 if (e.isFinal) {
@@ -413,6 +458,7 @@ this.board.removeChild(this.topCard)
 			            this.topCard.style.boxShadow = 'none';
                         agreeStamp.style.opacity = '0';
                         disagreeStamp.style.opacity = '0';
+                        skipStamp.style.opacity = '0';
 
                     }
 
@@ -429,6 +475,8 @@ this.board.removeChild(this.topCard)
         
         let agreeStamp = document.querySelector('.stamp.agree');
         let disagreeStamp = document.querySelector('.stamp.disagree');
+        let skipStamp = document.querySelector('.skip');
+
 
     </script>
 
