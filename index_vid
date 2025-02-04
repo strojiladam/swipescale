@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        
+  <style>
+    body {
+      overflow: hidden;
+      font-family: sans-serif;
+    }
+    *, *:before, *:after {
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+    }
+    #board {
+      width: 100%;
+      height: 100dvh;
+      position: relative;
+      overflow: hidden;
+      background-color: rgb(66, 66, 66);
+    }
+    @keyframes slideInFromBottom {
+      from {
+        transform: translate(-50%, 150%) scale(0.9);
+        opacity: 0;
+      }
+      to {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+    }
+    .card {
+      width: 90%;
+      height: 85%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 1%;
+      background-color: none;
+      overflow: hidden;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+      animation: slideInFromBottom 0.3s ease-out;
+      /* Set relative positioning so that inner overlays can use absolute positioning */
+      position: relative;
+    }
+    /* Make the video fill the card */
+    .card video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: inherit;
+      z-index: 1;
+    }
+    /* Overlay elements (stamps, skip, playpause, footer) should appear above the video */
+    .playpause {
+      background-image: url('https://masaryk.eu.qualtrics.com/ControlPanel/Graphic.php?IM=IM_h7gguDL6f5xgaXr');
+      background-repeat: no-repeat;
+      width: 150px;
+      height: 150px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background-size: contain;
+      display: none;
+      z-index: 2;
+    }
+    .stamp {
+      position: absolute;
+      top: 15%;
+      padding: 1% 2%;
+      border: 2px solid;
+      border-radius: 4px;
+      font-size: clamp(1.5rem, 5vw, 2.5rem);
+      font-weight: bold;
+      text-transform: uppercase;
+      transition: opacity 0.1s ease;
+      background-color: white;
+      z-index: 2;
+      filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.7));
+
+    }
+    .stamp.agree {
+      left: 15%;
+      color: green;
+      border-color: green;
+      transform: rotate(-10deg);
+      transform-origin: top left;
+      opacity: 0%;
+    }
+    .stamp.disagree {
+      right: 15%;
+      color: red;
+      border-color: red;
+      transform: rotate(10deg);
+      transform-origin: top right;
+      opacity: 0%;
+    }
+    .skip {
+      position: absolute;
+      bottom: 30%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #444; 
+      border-color: #444;
+      padding: 1% 2%;
+      border: 2px solid;
+      border-radius: 4px;
+      font-size: clamp(1.5rem, 5vw, 2.5rem);
+      font-weight: bold;
+      text-transform: uppercase;
+      opacity: 0%; /* Default hidden */
+      transition: opacity 0.1s ease;
+      z-index: 2;
+      background-color:white;
+    }
+    /* Footer placed at the bottom of the card */
+    .footer {
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      opacity: 90%;
+      z-index: 2;
+          filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.7));
+          color:white;
+
+    }
+    .footer .group {
+      display: flex;
+      gap: 10px;
+    }
+    .footer .center {
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      top: -20px; /* Adjust if needed */
+    }
+    .material-icons, .material-icons-outlined {
+      font-size: 45px;
+    }
+    /* Specific styles for thumb icons */
+    .footer .group .material-icons.thumb-down {
+      color: white;
+    }
+    .footer .group .material-icons.thumb-up {
+      color: white;
+    }
+    .arrow-up {
+      margin-bottom: -10px;
+      color: white;
+    }
+    .skip-text {
+      font-size: 16px;
+      color: white;
+      margin-top: 5px;
+      font-style: italic;
+    }
+    @media (max-width: 450px) {
+      .footer {
+        padding: 5px 10px;
+      }
+      .material-icons, .material-icons-outlined {
+        font-size: 30px;
+      }
+      .footer .group {
+        gap: 5px;
+      }
+      .footer .center {
+        top: -10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="board">
+    <div class="card">
+      <!-- Video fills the entire card -->
+      <video class="video" autoplay playsinline disablePictureInPicture>
+        <source src="https://masaryk.eu.qualtrics.com/ControlPanel/File.php?F=F_oSAxWv9su3x514l" type="video/mp4">
+      </video>
+      <div class="playpause"></div>
+      <div class="stamp agree">Agree</div>
+      <div class="stamp disagree">Disagree</div>
+      <div class="skip">Skip</div>
+      <div class="footer">
+        <div class="group">
+          <span class="material-icons">navigate_before</span>
+          <span class="material-icons thumb-down">thumb_down</span>
+        </div>
+        <div class="center">
+          <span class="material-icons arrow-up">keyboard_double_arrow_up</span>
+          <div class="skip-text">SKIP</div>
+        </div>
+        <div class="group">
+          <span class="material-icons thumb-up">thumb_up</span>
+          <span class="material-icons">navigate_next</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+    <script>
+    
+
+      
+       class Carousel {
+
+            constructor(element) {
+
+                this.board = element
+
+
+                // handle gestures
+                this.handle()
+
+            }
+
+            handle() {
+            
+            	let agreeStamp = document.querySelector('.stamp.agree');
+
+
+                // list all cards
+                this.cards = this.board.querySelectorAll('.card')
+
+                // get top card
+                this.topCard = this.cards[this.cards.length - 1]
+
+                // if at least one card is present
+                if (this.cards.length > 0) {
+
+                    // set default top card position and scale
+                    this.topCard.style.transform =
+                        'translateX(-50%) translateY(-50%) rotate(0deg) rotateY(0deg) scale(1)'
+
+                    // destroy previous Hammer instance, if present
+                    if (this.hammer) this.hammer.destroy()
+
+                    // listen for tap and pan gestures on top card
+                    this.hammer = new Hammer(this.topCard)
+                    this.hammer.add(new Hammer.Tap())
+                    this.hammer.add(new Hammer.Pan({
+                        position: Hammer.position_ALL,
+                        threshold: 0
+                    }))
+
+                    // pass events data to custom callbacks
+                    this.hammer.on('tap', (e) => {
+                        this.onTap(e)
+                    })
+                    this.hammer.on('pan', (e) => {
+                        this.onPan(e)
+                    })
+
+                }
+
+            }
+
+            onTap(e) {
+
+                // get finger position on top card
+                let propX = (e.center.x - e.target.getBoundingClientRect().left) / e.target.clientWidth
+
+                // get rotation degrees around Y axis (+/- 15) based on finger position
+                let rotateY = 15 * (propX < 0.05 ? -1 : 1)
+
+                // enable transform transition
+                this.topCard.style.transition = 'transform 100ms ease-out'
+
+                // apply rotation around Y axis
+                this.topCard.style.transform =
+                    'translateX(-50%) translateY(-50%) rotate(0deg) rotateY(' + rotateY + 'deg) scale(1)'
+
+                // wait for transition end
+                setTimeout(() => {
+                    // reset transform properties
+                    this.topCard.style.transform =
+                        'translateX(-50%) translateY(-50%) rotate(0deg) rotateY(0deg) scale(1)'
+                }, 100)
+
+            }
+
+            onPan(e) {
+
+                if (!this.isPanning) {
+
+                    this.isPanning = true
+
+                    // remove transition properties
+                    this.topCard.style.transition = null
+                    if (this.nextCard) this.nextCard.style.transition = null
+
+                    // get top card coordinates in pixels
+                    let style = window.getComputedStyle(this.topCard)
+                    let mx = style.transform.match(/^matrix\((.+)\)$/)
+                    this.startPosX = mx ? parseFloat(mx[1].split(', ')[4]) : 0
+                    this.startPosY = mx ? parseFloat(mx[1].split(', ')[5]) : 0
+
+                    // get top card bounds
+                    let bounds = this.topCard.getBoundingClientRect()
+
+                    // get finger position on top card, top (1) or bottom (-1)
+                    this.isDraggingFrom =
+                        (e.center.y - bounds.top) > this.topCard.clientHeight / 2 ? -1 : 1
+
+                }
+
+                // get new coordinates
+                let posX = e.deltaX + this.startPosX
+                let posY = e.deltaY + this.startPosY
+
+                // get ratio between swiped pixels and the axes
+                let propX = e.deltaX / this.board.clientWidth
+                let propY = e.deltaY / this.board.clientHeight
+
+                // get swipe direction, left (-1) or right (1)
+                let dirX = e.deltaX < 0 ? -1 : 1
+
+                // get degrees of rotation, between 0 and +/- X
+                let deg = this.isDraggingFrom * dirX * Math.abs(propX) * 15
+
+                // get scale ratio, between .95 and 1
+                let scale = (95 + (5 * Math.abs(propX))) / 100
+
+                // move and rotate top card
+                this.topCard.style.transform =
+                    'translateX(' + posX + 'px) translateY(' + posY + 'px) rotate(' + deg + 'deg) rotateY(0deg) scale(1)'
+
+                // scale up next card
+                if (this.nextCard) this.nextCard.style.transform =
+                    'translateX(-50%) translateY(-50%) rotate(0deg) rotateY(0deg) scale(' + scale + ')'
+
+
+
+        if (propX < -0.10) {
+        // Swiping left - #FF0000 (red)
+        this.topCard.style.boxShadow = `
+            inset 0 0 20px 10px rgba(255, 0, 0, 0.4), 
+            inset 0 0 30px 15px rgba(255, 0, 0, 0.3), 
+            inset 0 0 40px 20px rgba(255, 0, 0, 0.2)
+        `;
+        disagreeStamp.style.opacity = '1';
+        agreeStamp.style.opacity = '0';
+        skipStamp.style.opacity = '0';
+        
+    } else if (propX > 0.10) {
+        // Swiping right - #008000 (Green)
+        this.topCard.style.boxShadow = `
+            inset 0 0 20px 10px rgba(0, 128, 0, 0.4), 
+            inset 0 0 30px 15px rgba(0, 128, 0, 0.3), 
+            inset 0 0 40px 20px rgba(0, 128, 0, 0.2)
+        `;
+        disagreeStamp.style.opacity = '0';
+        agreeStamp.style.opacity = '1';
+        skipStamp.style.opacity = '0';
+        
+    } else if (propY < -0.25) {
+        // Swiping up - #4A90E2 (Blue)
+		this.topCard.style.boxShadow = `
+            inset 0 0 20px 10px rgba(0, 0, 0, 0.4), 
+            inset 0 0 30px 15px rgba(0, 0, 0, 0.3), 
+            inset 0 0 40px 20px rgba(0, 0, 0, 0.2)
+        `;
+        disagreeStamp.style.opacity = '0';
+        agreeStamp.style.opacity = '0';
+        skipStamp.style.opacity = '1';
+		    } else {
+		        // Reset styles when near the center
+		        this.topCard.style.boxShadow = 'none';
+                agreeStamp.style.opacity = '0';
+                disagreeStamp.style.opacity = '0';
+                skipStamp.style.opacity = '0';
+
+		    }
+
+                if (e.isFinal) {
+
+                    this.isPanning = false
+
+                    let successful = false
+                    
+                    let swipedir = null
+
+                    // set back transition properties
+                    this.topCard.style.transition = 'transform 200ms ease-out'
+                    if (this.nextCard) this.nextCard.style.transition = 'transform 100ms linear'
+
+                    // check threshold and movement direction
+                    if (propX > 0.25 && e.direction == Hammer.DIRECTION_RIGHT) {
+
+                        successful = true
+                        
+                        swipedir = 2
+                        // get right border position
+                        posX = this.board.clientWidth
+
+                    } else if (propX < -0.25 && e.direction == Hammer.DIRECTION_LEFT) {
+
+                        successful = true
+                        
+                        swipedir = 1
+                        // get left border position
+                        posX = -(this.board.clientWidth + this.topCard.clientWidth)
+
+                    } else if (propY < -0.25 && e.direction == Hammer.DIRECTION_UP) {
+
+                        successful = true
+                        
+                        swipedir = 0
+                        // get top border position
+                        posY = -(this.board.clientHeight + this.topCard.clientHeight)
+
+                    }
+
+                    if (successful) {
+
+                        // throw card in the chosen direction
+                        this.topCard.style.transform =
+                            'translateX(' + posX + 'px) translateY(' + posY + 'px) rotate(' + deg + 'deg)'
+
+Qualtrics.SurveyEngine.setEmbeddedData("swipedir1", swipedir)
+                        // wait transition end
+                        setTimeout(() => {
+                            // remove swiped card
+                            
+this.board.removeChild(this.topCard)
+                            
+                          // handle gestures on new top card
+                            this.handle()
+							jQuery("#NextButton").click();
+
+
+
+                        }, 200)
+
+                    } else {
+
+			            this.topCard.style.transform =
+			                'translateX(-50%) translateY(-50%) rotate(0deg)';
+			            this.topCard.style.boxShadow = 'none';
+                        agreeStamp.style.opacity = '0';
+                        disagreeStamp.style.opacity = '0';
+                        skipStamp.style.opacity = '0';
+
+                    }
+
+                }
+
+            }
+
+
+        }
+
+        let board = document.querySelector('#board')
+
+        let carousel = new Carousel(board)
+        
+        let agreeStamp = document.querySelector('.stamp.agree');
+        let disagreeStamp = document.querySelector('.stamp.disagree');
+        let skipStamp = document.querySelector('.skip');
+        
+            document.querySelectorAll('.video').forEach(video => {
+        video.addEventListener('play', function() {
+            this.parentElement.querySelector('.playpause').style.display = 'none';
+        });
+        video.addEventListener('pause', function() {
+            this.parentElement.querySelector('.playpause').style.display = 'block';
+        });
+        video.parentElement.addEventListener('click', function() {
+            let video = this.querySelector('.video');
+            if (video.paused) {
+                video.play();
+            } else {
+                video.pause();
+            }
+        });
+    });
+
+
+    </script>
+</html>
