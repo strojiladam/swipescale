@@ -1,0 +1,227 @@
+<style type="text/css">
+	
+.Skin #PushStickyFooter {
+    height: 0px !important;
+	display: none !important;
+}
+	
+	.Skin #Buttons {
+    text-align: right;
+    padding: 0px;
+    margin-top: 0px;
+    display: none !important;
+}
+	.Skin #HeaderContainer {
+    padding: 0px 0px 0 0px !important;
+}
+
+.Skin .Timing .InnerInner {
+    padding: 0 0px 0px 0px !important;
+}
+
+.Skin .QuestionText {
+   padding: 0px;!Important;
+   } 
+
+
+        body {
+            overflow: hidden;
+            font-family: sans-serif;
+			position:fixed;
+        }
+
+        *, *:before, *:after {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        #board {
+            width: 100%;
+            height: 100dvh;
+            position: relative;
+            overflow: hidden;
+            background-color: rgb(66, 66, 66);
+        }
+
+        @keyframes slideInFromBottom {
+            from {
+                transform: translate(-50%, 150%) scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .card {
+            width: 90%;
+            height: 85%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 1%;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Space out content */
+            align-items: center;
+            color: #000;
+            transition: box-shadow 0.1s ease;
+            border: none;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+            animation: slideInFromBottom 0.3s ease-out;
+        }
+
+        .text-container {
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+            padding: 20px;
+            text-align: center;
+            flex-grow: 1; /* Allow text to expand */
+            display: flex;
+            justify-content: center; /* Center text horizontally */
+            align-items: center; /* Center text vertically */
+        }
+
+        .stamp {
+            position: absolute;
+            top: 15%;
+            padding: 1% 2%;
+            border: 2px solid;
+            border-radius: 4px;
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: opacity 0.1s ease;
+        }
+
+        .stamp.agree {
+            left: 15%;
+            color: green;
+            border-color: green;
+            transform: rotate(-10deg);
+            transform-origin: top left;
+            opacity: 0%;
+        }
+
+        .stamp.disagree {
+            right: 15%;
+            color: red;
+            border-color: red;
+            transform: rotate(10deg);
+            transform-origin: top right;
+            opacity: 0%;
+        }
+        
+        .skip {
+    position: absolute;
+    bottom: 30%;
+    left: 50%;
+    transform: translateX(-50%) rotate(0deg);
+    color: #444; 
+    border-color: #444;
+    padding: 1% 2%;
+    border: 2px solid;
+    border-radius: 4px;
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    font-weight: bold;
+    text-transform: uppercase;
+    opacity: 0%; /* Default hidden */
+    transition: opacity 0.1s ease;
+}
+
+
+        .footer {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            opacity: 60%;
+        }
+
+        .footer .group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .footer .center {
+            margin: 0 auto;
+        }
+
+        .material-icons, .material-icons-outlined {
+            font-size: 45px;
+        }
+
+        /* Specific styles for thumb icons */
+        .footer .group .material-icons.thumb-down {
+            color: #F00000; /* Thumb down color */
+        }
+
+        .footer .group .material-icons.thumb-up {
+            color: #15B300; /* Thumb up color */
+        }
+        
+        .center {
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    top: -20px; /* Move the whole center content up */
+}
+
+.arrow-up {
+    margin-bottom: -10px; /* Keep the arrow slightly up */
+    color: #666;
+}
+
+.skip-text {
+    font-size: 16px;
+    color: #333;
+    margin-top: 5px; /* Space between the arrow and text */
+    font-style: italic;
+}
+
+@media (max-width: 450px) {
+    .footer {
+        padding: 5px 10px; /* Reduce padding */
+    }
+
+    .footer .material-icons, .footer .material-icons-outlined {
+        font-size: 30px; /* Reduce icon size */
+    }
+
+    .footer .group {
+        gap: 5px; /* Reduce gap between elements */
+    }
+
+    .footer .center {
+        top: -10px; /* Adjust positioning for smaller screens */
+    }
+}
+</style>
+<div id="board">
+<div class="card">
+<div class="stamp agree">Agree</div>
+
+<div class="stamp disagree">Disagree</div>
+
+<div class="skip">Skip</div>
+
+<div class="text-container">On the whole, I am satisfied with myself.</div>
+
+<div class="footer">
+<div class="group"><span class="material-icons">navigate_before</span> <span class="material-icons thumb-down">thumb_down</span></div>
+
+<div class="center"><span class="material-icons arrow-up">keyboard_double_arrow_up</span>
+
+<div class="skip-text">SKIP</div>
+</div>
+
+<div class="group"><span class="material-icons thumb-up">thumb_up</span> <span class="material-icons">navigate_next</span></div>
+</div>
+</div>
+</div>
