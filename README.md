@@ -7,7 +7,7 @@ The code is available as supplementary material to the research article:
 **Strojil & Cígler (n.d.)**
 
 
-**Disclaimer:** The code is a prototype, made available for replicability in line with the principles of **open science** and for adaptation by interested researchers/developers. Full optimization is not guaranteed.
+***Disclaimer:** The code is a prototype, made available for replicability purposes in line with the principles of **open science** and for adaptation by interested researchers/developers. Full optimization is not guaranteed.*
 
 ---
 
