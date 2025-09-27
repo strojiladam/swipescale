@@ -1,6 +1,6 @@
 # Swiping Response Format – Qualtrics Integration Guide
 
-This repository contains the code for implementing the **Swiping response format** into a Qualtrics project. For the Swiping format containing videos, visit the [video swiping repository](https://github.com/adamstr99/swipevid).
+This repository contains the code for implementing the **Swiping response format** into a Qualtrics project. For the Swiping format containing videos, visit the [video swiping repository](https://github.com/strojiladam/swipevid).
 
 The code is available as supplementary material to the research article:
 
