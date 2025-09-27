@@ -11,6 +11,12 @@ The code is available as supplementary material to the study:
 
 ---
 
+<p align="center">
+  <img src="https://github.com/adamstr99/swipescale/blob/8aec32c233a5d0e622f6a5bcd72fd205f0766306/Swipe.png" alt="Swipe" style= width:600px;">
+</p>
+
+---
+
 ## Instructions
 
 ### 1. Preview (`index`)
