@@ -2,7 +2,7 @@
 
 This repository contains the code for implementing the **Swiping response format** into a Qualtrics project. For the Swiping format containing videos, visit the [video swiping repository](https://github.com/adamstr99/swipevid).
 
-The code is available as supplementary material to the study:
+The code is available as supplementary material to the research article:
 
 **Strojil & Cígler (n.d.)**
 
@@ -33,27 +33,36 @@ The code is available as supplementary material to the study:
 
 ### 3. Customizing the Question JavaScript (`questionJS`)
 - Each swipe is saved as `swipedir` embedded data.  
-- In **Survey Flow**, at the beginning, create embedded data fields to save the responses: e.g., `swipedir1`, then `swipedir2`, then `swipedir3`…  
+- In **Survey Flow**, at the beginning, create embedded data fields to save the responses (e.g., `swipedir1`, then `swipedir2`, then `swipedir3`…).  
 - Each question must use a different `swipedir` variable.  
   - In the provided JS, find:  
     ```javascript
     Qualtrics.SurveyEngine.setEmbeddedData("swipedir1", swipedir);
     ```
-  - Change `"swipedir1"` to match one of your embedded data fields, e.g., `swipedir1`, or `swipedir2`, or `swipedir3`…
+  - Change `"swipedir1"` to match one of your embedded data fields (e.g., `swipedir1`, or `swipedir2`, or `swipedir3`…).
 
 ### 4. Customizing the Question Card Content (`questionHTML`)
 - To change the statement, edit:  
   ```html
   <div class="text-container">On the whole, I am satisfied with myself.</div>
   ```
-- To change the agree/disagree/skip stamp text, insert your stamp description, e.g., Agree -> Yes:  
+- To change the agree/disagree/skip stamp text, insert your stamp description (e.g., "Agree" -> "Yes"):  
   ```html
   <div class="stamp agree">Agree</div>
   <div class="stamp disagree">Disagree</div>
   <div class="skip">Skip</div>
   ```
-- The footer uses **Google Fonts Icons**: [https://fonts.google.com/icons](https://fonts.google.com/icons)
-
+- The footer uses **Google Fonts Icons**: [https://fonts.google.com/icons](https://fonts.google.com/icons). Feel free to change the icons by replacing the name of the icon with a different one (e.g., "thumb_up" -> "check"):
+  ```html
+  <span class="material-icons">navigate_before</span>
+  <span class="material-icons thumb-down">thumb_down</span></div>
+  
+  <span class="material-icons arrow-up">keyboard_double_arrow_up</span>
+  
+  <span class="material-icons thumb-up">thumb_up</span>
+  <span class="material-icons">navigate_next</span></div>
+  ```
+  
 ---
 
 ## License & Acknowledgment
