@@ -1,0 +1,11 @@
+.Skin .ProgressBarFill {
+    background-color: #0000dc !important;
+}
+
+.Skin #ProgressBarFillContainer, .Skin .ProgressBarFill, .Skin .ProgressBarFillContainer { 
+height: 0px !important;
+}
+
+.Skin #ProgressBar {
+        padding-bottom: 0 !important;
+    }
