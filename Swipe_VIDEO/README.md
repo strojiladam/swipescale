@@ -19,8 +19,22 @@ The code is available as supplementary material to the research article:
 
 ## Instructions
 
-### 0. Dependencies
-Videos can be hosted directly in your Qualtrics Files, and each question (swipe card) will use a URL link to the desired video. You can also use external hosting services. The videos were rendered in a portrait resolution of *1080×1920*.
+### 0. Dependencies and description
+
+#### Progress bar
+- The Qualtrics progress bar was customized not to obstruct the screen.
+- Make sure to **ENABLE** the progress bar in the **Look and Feel** of your Qualtrics project
+- It is disabled by default in the `look&feel.CSS`, change the *height: 0px* to another value to enable the progress bar.
+```
+.Skin #ProgressBarFillContainer, .Skin .ProgressBarFill, .Skin .ProgressBarFillContainer { 
+height: 0px !important;
+}
+```
+
+#### Videos
+Videos can be hosted directly in your Qualtrics Files, and each question (swipe card) will use a URL link to the desired video. You can also use external hosting services. In our case, the videos were rendered in a portrait resolution of *1080×1920* and 720p quality.
+  
+The videos are set to **autoplay**. The autoplay may be restricted, particularly for iOS devices, so a "touch-to-start" functionality was added, which starts the video playback immediately after it's been touched for the first time, allowing immediate interaction with the swiping card for the user. While the basic tap-to-start functionality works as well, it's not required.
 
 ### 1. Preview (`index.html`)
 - The `index.html` file is a working prototype with all necessary code merged (HTML, CSS, JS).  
