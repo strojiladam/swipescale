@@ -54,8 +54,8 @@ Videos can be hosted directly in your Qualtrics Files, and each question (swipe 
   <video class="video" playsinline autoplay disablePictureInPicture>...</video>  ```
   ```
 
-- To change the playbutton overlay, change the link to your graphic.
-- The default playbutton graphic is also available in this directory as `playbutton.png`. It's advised to upload this image to your Qualtrics Files and use the URL from there to ensure your project's integrity:  
+- The default playbutton graphic is linked to the original Qualtrics file. It is also available in this directory as `PlayButton.png`. It's advised to upload this image to your Qualtrics Files and use the URL from there to ensure your project's integrity.
+- To change the playbutton overlay (or path to it), change the URL to your graphic:
   ```html
   .playpause {
       background-image: url('https://masaryk.eu.qualtrics.com/ControlPanel/Graphic.php?IM=IM_gnExt9WbpfLJIDd');
