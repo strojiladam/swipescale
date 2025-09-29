@@ -25,11 +25,11 @@ The code is available as supplementary material to the research article:
 - The Qualtrics progress bar was customized not to obstruct the screen.
 - Make sure to **ENABLE** the progress bar in the **Look and Feel** of your Qualtrics project
 - It is disabled by default in the `look&feel.CSS`, change the *height: 0px* to another value to enable the progress bar.
-```
-.Skin #ProgressBarFillContainer, .Skin .ProgressBarFill, .Skin .ProgressBarFillContainer { 
-height: 0px !important;
-}
-```
+  ```css
+  .Skin #ProgressBarFillContainer, .Skin .ProgressBarFill, .Skin .ProgressBarFillContainer { 
+  height: 0px !important;
+  }
+  ```
 
 ### 1. Preview (`index.html`)
 - The `index.html` file is a working prototype with all necessary code merged (HTML, CSS, JS).  
