@@ -40,7 +40,7 @@ The code is available as supplementary material to the research article:
 2. Paste the content of `look&feel.CSS` into the **Look and Feel → Custom CSS** of your Qualtrics project.  
 3. Create a **question block** in the Qualtrics survey builder.  
 4. Create an **empty question**.  
-   - Paste the content of `question.CSS` into the HTML editor of the empty question.  
+   - Paste the content of `question.html` into the HTML editor of the empty question.  
    - Paste the content of `question.JS` into the question’s JavaScript.
 
 ### 3. Customizing the Question JavaScript (`question.JS`)
@@ -53,7 +53,7 @@ The code is available as supplementary material to the research article:
     ```
   - Change `"swipedir1"` to match one of your embedded data fields (e.g., `swipedir1`, or `swipedir2`, or `swipedir3`…).
 
-### 4. Customizing the Question Card Content (`question.CSS`)
+### 4. Customizing the Question Card Content (`question.html`)
 - To change the statement, edit:  
   ```html
   <div class="text-container">On the whole, I am satisfied with myself.</div>
