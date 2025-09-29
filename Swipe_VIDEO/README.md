@@ -25,7 +25,7 @@ The code is available as supplementary material to the research article:
 - The Qualtrics progress bar was customized not to obstruct the screen.
 - Make sure to **ENABLE** the progress bar in the **Look and Feel** of your Qualtrics project
 - It is disabled by default in the `look&feel.CSS`, change the *height: 0px* to another value to enable the progress bar.
-```
+```css
 .Skin #ProgressBarFillContainer, .Skin .ProgressBarFill, .Skin .ProgressBarFillContainer { 
 height: 0px !important;
 }
@@ -70,7 +70,7 @@ The videos are set to **autoplay**. The autoplay may be restricted, particularly
 
 - The default playbutton graphic is linked to the original Qualtrics file. It is also available in this directory as `PlayButton.png`. It's advised to upload this image to your Qualtrics Files and use the URL from there to ensure your project's integrity.
 - To change the playbutton overlay (or path to it), change the URL to your graphic:
-  ```html
+  ```css
   .playpause {
       background-image: url('https://masaryk.eu.qualtrics.com/ControlPanel/Graphic.php?IM=IM_gnExt9WbpfLJIDd');
      ...
