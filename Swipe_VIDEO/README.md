@@ -32,7 +32,7 @@ height: 0px !important;
 ```
 
 #### Videos
-Videos can be hosted directly in your Qualtrics Files, and each question (swipe card) will use a URL link to the desired video. You can also use external hosting services. In our case, the videos were rendered in a portrait resolution of *1080×1920* and 720p quality.
+Videos can be hosted directly in your Qualtrics Files, and each question (swipe card) will use a URL link to the desired video. You can also use external hosting services. In our case, the videos were rendered in a portrait resolution of *1080×1920* and 720p quality. For the creation of AI avatar videos, we can recommend [Synthesia](https://www.synthesia.io/).
   
 The videos are set to **autoplay**. The autoplay may be restricted, particularly for iOS devices, so a "touch-to-start" functionality was added, which starts the video playback immediately after it's been touched for the first time, allowing immediate interaction with the swiping card for the user. While the basic tap-to-start functionality works as well, it's not required.
 
