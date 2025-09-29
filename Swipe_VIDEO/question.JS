@@ -1,0 +1,314 @@
+Qualtrics.SurveyEngine.addOnload(function()
+{
+
+        class Carousel {
+
+            constructor(element) {
+
+                this.board = element
+
+
+                // handle gestures
+                this.handle()
+
+            }
+
+            handle() {
+            
+            	let agreeStamp = document.querySelector('.stamp.agree'); 
+
+
+                // list all cards
+                this.cards = this.board.querySelectorAll('.card')
+
+                // get top card
+                this.topCard = this.cards[this.cards.length - 1]
+
+                // if at least one card is present
+                if (this.cards.length > 0) {
+
+                    // set default top card position and scale
+                    this.topCard.style.transform =
+                        'translateX(-50%) translateY(-50%) rotate(0deg) rotateY(0deg) scale(1)'
+
+                    // destroy previous Hammer instance, if present
+                    if (this.hammer) this.hammer.destroy()
+
+                    // listen for tap and pan gestures on top card
+                    this.hammer = new Hammer(this.topCard)
+                    this.hammer.add(new Hammer.Tap())
+                    this.hammer.add(new Hammer.Pan({
+                        position: Hammer.position_ALL,
+                        threshold: 0
+                    }))
+
+                    // pass events data to custom callbacks
+                    this.hammer.on('tap', (e) => {
+                        this.onTap(e)
+                    })
+                    this.hammer.on('pan', (e) => {
+                        this.onPan(e)
+                    })
+
+                }
+
+            }
+
+            onTap(e) {
+
+                // get finger position on top card
+                //let propX = (e.center.x - e.target.getBoundingClientRect().left) / e.target.clientWidth
+
+                // get rotation degrees around Y axis (+/- 15) based on finger position
+                //let rotateY = 15 * (propX < 0.05 ? -1 : 1)
+
+                // enable transform transition
+               // this.topCard.style.transition = 'transform 100ms ease-out'
+
+                // apply rotation around Y axis
+               // this.topCard.style.transform =
+               //     'translateX(-50%) translateY(-50%) rotate(0deg) rotateY(' + rotateY + 'deg) scale(1)'
+
+                // wait for transition end
+                //setTimeout(() => {
+                    // reset transform properties
+               //     this.topCard.style.transform =
+               //         'translateX(-50%) translateY(-50%) rotate(0deg) rotateY(0deg) scale(1)'
+               // }, 100)
+
+            }
+
+            onPan(e) {
+
+                if (!this.isPanning) {
+
+                    this.isPanning = true
+
+                    // remove transition properties
+                    this.topCard.style.transition = null
+                    if (this.nextCard) this.nextCard.style.transition = null
+
+                    // get top card coordinates in pixels
+                    let style = window.getComputedStyle(this.topCard)
+                    let mx = style.transform.match(/^matrix\((.+)\)$/)
+                    this.startPosX = mx ? parseFloat(mx[1].split(', ')[4]) : 0
+                    this.startPosY = mx ? parseFloat(mx[1].split(', ')[5]) : 0
+
+                    // get top card bounds
+                    let bounds = this.topCard.getBoundingClientRect()
+
+                    // get finger position on top card, top (1) or bottom (-1)
+                    this.isDraggingFrom =
+                        (e.center.y - bounds.top) > this.topCard.clientHeight / 2 ? -1 : 1
+
+                }
+
+                // get new coordinates
+                let posX = e.deltaX + this.startPosX
+                let posY = e.deltaY + this.startPosY
+
+                // get ratio between swiped pixels and the axes
+                let propX = e.deltaX / this.board.clientWidth
+                let propY = e.deltaY / this.board.clientHeight
+
+                // get swipe direction, left (-1) or right (1)
+                let dirX = e.deltaX < 0 ? -1 : 1
+
+                // get degrees of rotation, between 0 and +/- X
+                let deg = this.isDraggingFrom * dirX * Math.abs(propX) * 15
+
+                // get scale ratio, between .95 and 1
+                let scale = (95 + (5 * Math.abs(propX))) / 100
+
+                // move and rotate top card
+                this.topCard.style.transform =
+                    'translateX(' + posX + 'px) translateY(' + posY + 'px) rotate(' + deg + 'deg) rotateY(0deg) scale(1)'
+
+                // scale up next card
+                if (this.nextCard) this.nextCard.style.transform =
+                    'translateX(-50%) translateY(-50%) rotate(0deg) rotateY(0deg) scale(' + scale + ')'
+
+
+
+        if (propX < -0.10) {
+        disagreeStamp.style.opacity = '1';
+        agreeStamp.style.opacity = '0';
+        skipStamp.style.opacity = '0';
+        
+    } else if (propX > 0.10) {
+        disagreeStamp.style.opacity = '0';
+        agreeStamp.style.opacity = '1';
+        skipStamp.style.opacity = '0';
+        
+    } else if (propY < -0.25) {
+        disagreeStamp.style.opacity = '0';
+        agreeStamp.style.opacity = '0';
+        skipStamp.style.opacity = '1';
+		
+		    } else {
+		        // Reset styles when near the center
+		        this.topCard.style.boxShadow = 'none';
+                agreeStamp.style.opacity = '0';
+                disagreeStamp.style.opacity = '0';
+                skipStamp.style.opacity = '0';
+
+		    }
+
+                if (e.isFinal) {
+
+                    this.isPanning = false
+
+                    let successful = false
+                    
+                    let swipedir = null
+
+                    // set back transition properties
+                    this.topCard.style.transition = 'transform 200ms ease-out'
+                    if (this.nextCard) this.nextCard.style.transition = 'transform 100ms linear'
+
+                    // check threshold and movement direction
+                    if (propX > 0.25 && e.direction == Hammer.DIRECTION_RIGHT) {
+
+                        successful = true
+                        
+                        swipedir = 1
+                        // get right border position
+                        posX = this.board.clientWidth
+
+                    } else if (propX < -0.25 && e.direction == Hammer.DIRECTION_LEFT) {
+
+                        successful = true
+                        
+                        swipedir = 0
+                        // get left border position
+                        posX = -(this.board.clientWidth + this.topCard.clientWidth)
+
+                    } else if (propY < -0.25 && e.direction == Hammer.DIRECTION_UP) {
+
+                        successful = true
+                        
+                        swipedir = 99
+                        // get top border position
+                        posY = -(this.board.clientHeight + this.topCard.clientHeight)
+
+                    }
+
+                    if (successful) {
+
+                        // throw card in the chosen direction
+                        this.topCard.style.transform =
+                            'translateX(' + posX + 'px) translateY(' + posY + 'px) rotate(' + deg + 'deg)'
+
+Qualtrics.SurveyEngine.setEmbeddedData("swipedir1", swipedir)
+                        // wait transition end
+                        setTimeout(() => {
+                            // remove swiped card
+                            
+this.board.removeChild(this.topCard)
+                            
+                          // handle gestures on new top card
+                            this.handle()
+							jQuery("#NextButton").click();
+
+
+
+                        }, 200)
+
+                    } else {
+
+			            this.topCard.style.transform =
+			                'translateX(-50%) translateY(-50%) rotate(0deg)';
+			            this.topCard.style.boxShadow = 'none';
+                        agreeStamp.style.opacity = '0';
+                        disagreeStamp.style.opacity = '0';
+                        skipStamp.style.opacity = '0';
+
+                    }
+
+                }
+
+            }
+
+
+        }
+
+        let board = document.querySelector('#board')
+
+        let carousel = new Carousel(board)
+        
+        let agreeStamp = document.querySelector('.stamp.agree');
+        let disagreeStamp = document.querySelector('.stamp.disagree');
+        let skipStamp = document.querySelector('.skip');
+	
+	
+$('.video').each(function() {
+  var $video = $(this);
+  var video = $video.get(0);
+
+  // Track if the video has played at least once
+  $video.data('hasPlayed', false);
+
+  // One-time touchstart event to play video
+  $video.parent().one('touchstart', function(event) {
+    if (!$video.data('hasPlayed')) {
+      video.play();
+      $video.data('hasPlayed', true);
+      // Mark the parent as just touched
+      $video.parent().data('justTouched', true);
+      event.stopPropagation();
+    }
+  });
+
+  // Play event - Ensures overlay disappears when video starts
+  $video.on('play', function() {
+    $(this).data('hasPlayed', true);
+    $(this).parent().children(".playpause").fadeOut(50);
+  });
+
+  // End event - Ensures overlay reappears when video ends
+  $video.on('ended', function() {
+    $(this).parent().children(".playpause").fadeIn(50);
+  });
+});
+
+// Click event for toggling play/pause
+$('.video').parent().click(function () {
+  // If the parent was just touched, ignore the click and reset the flag.
+  if ($(this).data('justTouched')) {
+    $(this).data('justTouched', false);
+    return;
+  }
+
+  var $video = $(this).children(".video");
+  var video = $video.get(0);
+  var overlay = $(this).children(".playpause");
+
+  if (video.paused) {        
+    video.play();   
+    overlay.fadeOut(50);
+  } else {       
+    video.pause();
+    overlay.fadeIn(50);
+  }
+});
+
+
+	
+	
+	this.hidePreviousButton();
+	this.hideNextButton();
+
+});
+
+
+Qualtrics.SurveyEngine.addOnReady(function()
+{
+	/*Place your JavaScript here to run when the page is fully displayed*/
+
+});
+
+Qualtrics.SurveyEngine.addOnUnload(function()
+{
+	/*Place your JavaScript here to run when the page is unloaded*/
+
+});
