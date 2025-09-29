@@ -1,6 +1,6 @@
-# Swiping Response Format – Qualtrics Integration Guide
+# Textual Swipe Scale – Qualtrics Integration Guide
 
-This repository contains the code for implementing the **Swiping response format** into a Qualtrics project. For the Swiping format containing videos, visit the [video swiping repository](https://github.com/strojiladam/swipevid).
+This repository contains the code for implementing the **Textual Swiping response format** into a Qualtrics project.
 
 The code is available as supplementary material to the research article:
 
@@ -19,19 +19,19 @@ The code is available as supplementary material to the research article:
 
 ## Instructions
 
-### 1. Preview (`index`)
-- The `index` file is a working prototype with all necessary code merged (HTML, CSS, JS).  
+### 1. Preview (`index.html`)
+- The `index.html` file is a working prototype with all necessary code merged (HTML, CSS, JS).  
 - It works outside Qualtrics for preview and testing purposes, or for integration to websites and other survey engines.
 
 ### 2. Integration into Qualtrics
-1. Paste the content of `look&feel_JS` into the **Look and Feel → Header** of your Qualtrics project.  
-2. Paste the content of `look&feel_CSS` into the **Look and Feel → Custom CSS** of your Qualtrics project.  
+1. Paste the content of `look&feel.JS` into the **Look and Feel → Header** of your Qualtrics project.  
+2. Paste the content of `look&feel.CSS` into the **Look and Feel → Custom CSS** of your Qualtrics project.  
 3. Create a **question block** in the Qualtrics survey builder.  
 4. Create an **empty question**.  
-   - Paste the content of `questionHTML` into the HTML editor of the empty question.  
-   - Paste the content of `questionJS` into the question’s JavaScript.
+   - Paste the content of `question.CSS` into the HTML editor of the empty question.  
+   - Paste the content of `question.JS` into the question’s JavaScript.
 
-### 3. Customizing the Question JavaScript (`questionJS`)
+### 3. Customizing the Question JavaScript (`question.JS`)
 - Each swipe is saved as `swipedir` embedded data.  
 - In **Survey Flow**, at the beginning, create embedded data fields to save the responses (e.g., `swipedir1`, then `swipedir2`, then `swipedir3`…).  
 - Each question must use a different `swipedir` variable.  
@@ -41,7 +41,7 @@ The code is available as supplementary material to the research article:
     ```
   - Change `"swipedir1"` to match one of your embedded data fields (e.g., `swipedir1`, or `swipedir2`, or `swipedir3`…).
 
-### 4. Customizing the Question Card Content (`questionHTML`)
+### 4. Customizing the Question Card Content (`question.CSS`)
 - To change the statement, edit:  
   ```html
   <div class="text-container">On the whole, I am satisfied with myself.</div>
