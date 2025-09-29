@@ -45,7 +45,7 @@ The videos are set to **autoplay**. The autoplay may be restricted, particularly
 2. Paste the content of `look&feel.CSS` into the **Look and Feel → Custom CSS** of your Qualtrics project.  
 3. Create a **question block** in the Qualtrics survey builder.  
 4. Create an **empty question**.  
-   - Paste the content of `question.CSS` into the HTML editor of the empty question.  
+   - Paste the content of `question.html` into the HTML editor of the empty question.  
    - Paste the content of `question.JS` into the question’s JavaScript.
 
 ### 3. Customizing the Question JavaScript (`question.JS`)
@@ -58,7 +58,7 @@ The videos are set to **autoplay**. The autoplay may be restricted, particularly
     ```
   - Change `"swipedir1"` to match one of your embedded data fields (e.g., `swipedir1`, or `swipedir2`, or `swipedir3`…).
 
-### 4. Customizing the Question Card Content (`question.CSS`)
+### 4. Customizing the Question Card Content (`question.html`)
 - To include your video, edit the link to your desired video file hosted somewhere online (note that we used the MP4 format):  
   ```html
   <source src="https://vz-03f87557-be3.b-cdn.net/62f17e9c-a015-42e9-ba9e-3c962159f05b/play_720p.mp4" type="video/mp4">
