@@ -21,15 +21,16 @@ The code is available as supplementary material to the research article:
 
 ### 0. Dependencies and description
 
-#### Progress bar
-- The Qualtrics progress bar was customized not to obstruct the screen and **SHOULD** be enabled in the Qualtrics settings.
-- Make sure to **ENABLE** the progress bar in the **Look and Feel** of your Qualtrics project.
-- It is disabled by default in the `look&feel.CSS`, change the *height: 0px* to another value to enable the progress bar.
-```css
-.Skin #ProgressBarFillContainer, .Skin .ProgressBarFill, .Skin .ProgressBarFillContainer { 
-height: 0px !important;
-}
-```
+#### Qualtrics settings
+  - Some Qualtrics settings are highly recommended to avoid bugs after creating your project (or using the template)
+  - Go to **SURVEY SETTINGS → General** and **DISABLE** the **New Survey Taking Experience**
+  - In **LOOK AND FEEL**:
+    - set **Theme** to *Blank*
+    - set **Layout** to *Classic*
+    - in **General**, set **Progress bar** to *Without text*
+      - The bar is customized in `look&feel.CSS` and disabled by default there
+    - in **Style**, **Question spacing** is recommended to be *Compact*
+    - in **Motion**, make sure that **Page Transition** is set to *None*
 
 #### Videos
 Videos can be hosted directly in your Qualtrics Files, and each question (swipe card) will use a URL link to the desired video. You can also use external hosting services. In our case, the videos were rendered in a portrait resolution of *1080×1920* and 720p quality. For the creation of AI avatar videos, we can recommend [Synthesia](https://www.synthesia.io/).
@@ -41,18 +42,18 @@ The videos are set to **autoplay**. The autoplay may be restricted, particularly
 - It works outside Qualtrics for preview and testing purposes, or for integration to websites and other survey engines.
 
 ### 2. Integration into Qualtrics
-1. Paste the content of `look&feel.JS` into the **Look and Feel → Header** of your Qualtrics project.  
-2. Paste the content of `look&feel.CSS` into the **Look and Feel → Custom CSS** of your Qualtrics project.  
-3. Create a **question block** in the Qualtrics survey builder.  
-4. Create an **empty question**.  
-   - Paste the content of `question.html` into the HTML editor of the empty question.  
+1. Paste the content of `look&feel.JS` into the **Look and Feel → General → Header** of your Qualtrics project.  
+2. Paste the content of `look&feel.CSS` into the **Look and Feel → Style → Custom CSS** of your Qualtrics project.  
+3. Create a **Question block** in the Qualtrics survey builder.  
+4. Create a **Text / Graphic** question in the block.  
+   - Paste the content of `question.html` into the HTML editor of the **Text / Graphic** question.  
    - Paste the content of `question.JS` into the question’s JavaScript.
 
 ### 3. Customizing the Question JavaScript (`question.JS`)
 - Each swipe is saved as `swipedir` embedded data.  
 - In **Survey Flow**, at the beginning, create embedded data fields to save the responses (e.g., `swipedir1`, then `swipedir2`, then `swipedir3`…).  
 - Each question must use a different `swipedir` variable.  
-  - In the provided JS, find:  
+  - In the `question.JS` now pasted in your question, find:  
     ```javascript
     Qualtrics.SurveyEngine.setEmbeddedData("swipedir1", swipedir);
     ```
@@ -93,6 +94,15 @@ The videos are set to **autoplay**. The autoplay may be restricted, particularly
   <span class="material-icons thumb-up">thumb_up</span>
   <span class="material-icons">navigate_next</span></div>
   ```
+
+### 5. The progress bar (`look&feel.CSS`)
+    
+- The bar is disabled by default in the `look&feel.CSS`, change the *height: 0px* to another value (e.g., 10px) to reveal it.     
+   ```css
+   .Skin #ProgressBarFillContainer, .Skin .ProgressBarFill, .Skin .ProgressBarFillContainer { 
+       height: 0px !important;
+     }
+   ```
   
 ---
 
