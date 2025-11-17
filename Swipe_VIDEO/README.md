@@ -68,7 +68,7 @@ The videos are set to **autoplay**. The autoplay may be restricted, particularly
   ```
   - You can also change the behavior of the video by customizing:
   ```html
-  <video class="video" playsinline autoplay disablePictureInPicture>...</video>  ```
+  <video class="video" playsinline autoplay disablePictureInPicture>...</video> 
   ```
 
 - The default playbutton graphic is linked to the original Qualtrics file. It is also available in this directory as `PlayButton.png`. It's advised to upload this image to your Qualtrics Files and use the URL from there to ensure your project's integrity.
